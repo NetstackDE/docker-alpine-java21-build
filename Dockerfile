@@ -1,18 +1,19 @@
-FROM alpine:edge
-MAINTAINER Andreas Pfeiffer - Netstack <pfeiffer@netstack.de>
+# Stable Alpine Linux release
+FROM alpine:3.24
 
-#update keys
-RUN apk update
-RUN apk add -X https://dl-cdn.alpinelinux.org/alpine/v3.16/main -u alpine-keys
-RUN apk update
-# FIX SSL Issue
-RUN apk upgrade --no-cache openssh openssl libcrypto3 libssl3
+LABEL org.opencontainers.image.authors="Netstack GmbH"
+LABEL org.opencontainers.image.description="Alpine Linux with OpenJDK 21, Bash and Git"
 
-#Install JAVA and Gradle
-RUN apk add openjdk21
+# Install Java 21 JDK and utilities
+RUN apk add --no-cache \
+    openjdk21-jdk \
+    bash \
+    git \
+    openssh-client \
+    ca-certificates \
+    && update-ca-certificates
 
-#Install Bash & git
-RUN apk add bash
-RUN apk add git
+# Verify Java installation during build
+RUN java -version && javac -version
 
 CMD ["/bin/bash"]
