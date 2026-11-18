@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.authors="Netstack GmbH"
 LABEL org.opencontainers.image.description="Alpine Linux with OpenJDK 21, Bash and Git"
 
 # Install Java 21 JDK and utilities
-RUN apk upgrade --no-cache \
+RUN apk upgrade --no-cache && \
     apk add --no-cache \
     openjdk21-jdk \
     bash \
